@@ -1,56 +1,99 @@
 <template>
-    <div class="login">
-        <el-card>
-            <div class="title">
-                <img src="../../assets/logo_index.png">
-            </div>
-            <el-form style="margin-top:20px">
-                <el-form-item>
-                    <!-- 手机号 -->
-                    <el-input placeHolder="请输入手机号"></el-input>
-                </el-form-item>
-            <el-form-item>
-                 <!-- 验证码 -->
-                 <el-input style="width:60%" placeHolder="请输入验证码" ></el-input>
-                 <!-- 发送验证码 -->
-                 <el-button style="float:right">发送验证码</el-button>
-             </el-form-item>
-              <el-form-item>
-                 <!-- 同意选项 -->
-                 <el-checkbox>我已阅读并同意用户协议和隐私条款</el-checkbox>
-             </el-form-item>
-              <el-form-item>
-                  <!-- 登录按钮 -->
-                  <el-button type="primary" style="width:100%">登录</el-button>
-              </el-form-item>
-              </el-form>
-        </el-card>
-    </div>
+  <div class="login">
+    <el-card>
+      <div class="title">
+        <img src="../../assets/logo_index.png" />
+      </div>
+      <el-form style="margin-top:20px" ref="myForm" :model="loginForm" :rules="loginRules">
+        <el-form-item prop="mobile">
+          <!-- 手机号 -->
+          <el-input placeholder="请输入手机号" v-model="loginForm.mobile"></el-input>
+        </el-form-item>
+        <el-form-item prop="code">
+          <!-- 验证码 -->
+          <el-input style="width:60%" placeholder="请输入验证码" v-model="loginForm.code"></el-input>
+          <!-- 发送验证码 -->
+          <el-button style="float:right">发送验证码</el-button>
+        </el-form-item>
+        <el-form-item prop="check">
+          <!-- 同意选项 -->
+          <el-checkbox v-model="loginForm.agree">我已阅读并同意用户协议和隐私条款</el-checkbox>
+        </el-form-item>
+        <el-form-item>
+          <!-- 登录按钮 -->
+          <el-button type="primary" style="width:100%" @click="login">登录</el-button>
+        </el-form-item>
+      </el-form>
+    </el-card>
+  </div>
 </template>
 
 <script>
 export default {
-
+  data () {
+    return {
+      // 定义一个表单数据对象
+      loginForm: {
+        mobile: '', // 手机号
+        code: '', // 验证码
+        check: false // 是否勾选
+      },
+      loginRules: {
+        // 验证规则 验证登录表单的  key(字段名):value(数组)
+        // required true -> 必填
+        mobile: [{ required: true, message: '请输入您的手机号' }, {
+          pattern: /^1[3456789]\d{9}$/, message: '手机号格式不正确'
+        }],
+        code: [{ required: true, message: '请输入您的验证码' }, {
+          pattern: /^\d{6}$/,
+          message: '验证码格式不正确'
+        }],
+        // 自定义函数
+        check: [{ validator: function (rule, value, callback) {
+          //   rule当前的规则 没什么用
+          // value指的就是我们要校验的字段的值
+          if (value) {
+            //  认为校验通过 放过去
+            callback() // 直接执行callback 认为通过
+          } else {
+            //  认为校验不通过 要提示信息
+            callback(new Error('您必须无条件同意被我们坑'))
+          }
+        } }]
+      }
+    }
+  },
+  methods: {
+    login () {
+      // 校验整个表单的规则
+      // validate 是一个方法 => 方法中传入的一个函数 两个校验参数  是否校验成功/未校验成功的字段
+      this.$refs.myForm.validate(function (isOK) {
+        if (isOK) {
+          console.log('校验成功')
+        }
+      })
+    }
+  }
 }
 </script>
 
 <style lang="less" scoped>
-    .login {
-            background-image: url('../../assets/login_bg.jpg');
-            background-size: cover ;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            .login-card {
-                width: 440px;
-                height: 350px;
-                .title {
-                    text-align : center;
-                    img {
-                         height:45px;
-                    }
-                }
-            }
+.login {
+  background-image: url("../../assets/login_bg.jpg");
+  background-size: cover;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .login-card {
+    width: 440px;
+    height: 350px;
+    .title {
+      text-align: center;
+      img {
+        height: 45px;
+      }
     }
+  }
+}
 </style>
