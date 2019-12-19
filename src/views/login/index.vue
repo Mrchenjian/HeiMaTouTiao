@@ -57,7 +57,7 @@ export default {
             callback() // 直接执行callback 认为通过
           } else {
             //  认为校验不通过 要提示信息
-            callback(new Error('您必须无条件同意被我们坑'))
+            callback(new Error('不勾选无法登陆'))
           }
         } }]
       }
