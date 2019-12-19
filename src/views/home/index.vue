@@ -1,6 +1,6 @@
 <template>
 <!-- 左侧导航 -->
-<div class='layout-aside'>
+<div class='layout-aside' style="height:100vh ; background-color: #353b4e">
     <div class='title'>
         <img src="../../assets/logo_admin.png" alt="">
     </div>
