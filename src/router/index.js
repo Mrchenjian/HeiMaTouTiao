@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import bghome from '../views/home/bghom.vue'
 import Home from '../views/home/index'
 import Login from '../views/login/index'
 Vue.use(VueRouter)
@@ -12,9 +13,16 @@ const routes = [
   {
     path: '/home',
     name: 'home',
-    component: Home
+    component: Home,
+    children: [
+      {
+        path: '/home/list',
+        component: bghome
+      }
+    ]
   },
   {
+    // 登录页
     path: '/login',
     component: Login
   }
