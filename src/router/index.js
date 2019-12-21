@@ -16,7 +16,7 @@ const routes = [
     component: Home,
     children: [
       {
-        path: '/home/list',
+        path: '',
         component: bghome
       }
     ]

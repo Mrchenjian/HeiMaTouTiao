@@ -3,6 +3,7 @@ import App from './App.vue'
 import './styles/index.less'
 import router from './router/index'
 import axios from 'axios'
+import './promission/index'
 import ElementUI from 'element-ui' // 引入UI
 import 'element-ui/lib/theme-chalk/index.css' // 引入样式
 Vue.config.productionTip = false
