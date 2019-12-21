@@ -1,4 +1,6 @@
 import axios from 'axios'
+import router from '../router/index'
+import { Message } from 'element-ui' // 引入提示对象
 axios.defaults.baseURL = 'http://ttapi.research.itcast.cn/mp/v1_0'
 // 黑马头条PC-接口访问-axios拦截器-统一处理请求token
 axios.interceptors.request.use(function (config) {
@@ -13,6 +15,29 @@ axios.interceptors.request.use(function (config) {
 axios.interceptors.response.use(function (response) {
   return response.data ? response.data : {}
 }, function (error) {
-  return Promise.project(error)
+  let status = error.response.status // 获取状态码
+  let message = ''
+  switch (status) {
+    case 400:
+      message = '请求参数错误 (你手机验证码不正确)'
+      break
+    case 403:
+      message = '403 refresh_token未携带或已过期'
+      break
+    case 507:
+      message = '服务器数据库异常'
+      break
+    case 401:
+      message = 'token过期或未出'
+      window.localStorage.clear() // 清空缓存
+      router.push('/login') // this.$router.push()
+      break
+    case 404:
+      message = '手机号不正确'
+      break
+    default:
+      break
+  }
+  Message({ type: 'warning', message }) // 提示消息
 })
 export default axios

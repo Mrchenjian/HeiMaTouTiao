@@ -83,14 +83,15 @@ export default {
             console.log(result)
             window.localStorage.setItem('user-token', result.data.token) // 前端缓存令牌
             this.$router.push('/home') // 跳转到主页
-          }).catch(() => {
-            // elementUI的方法
-            console.log('进来了')
-            this.$message({
-              message: '您的手机号或者验证码不正确',
-              type: 'warning'
-            })
           })
+          // .catch(() => {
+          // // elementUI的方法
+          //   console.log('进来了')
+          //   this.$message({
+          //     message: '您的手机号或者验证码不正确',
+          //     type: 'warning'
+          //   })
+          // })
         }
       })
     }

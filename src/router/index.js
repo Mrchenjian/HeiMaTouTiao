@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import bghome from '../views/home/bghom.vue'
+// import bghome from '../views/home/bghom.vue'
 import Home from '../views/home/index'
 import Login from '../views/login/index'
 Vue.use(VueRouter)
@@ -16,8 +16,11 @@ const routes = [
     component: Home,
     children: [
       {
-        path: '',
-        component: bghome
+        // path: '',
+        // component: bghome
+        path: '/home/comment',
+        component: () => import('../views/comment/')
+
       }
     ]
   },
