@@ -81,7 +81,7 @@ export default {
             data: this.loginForm
           }).then(result => {
             console.log(result)
-            window.localStorage.setItem('user-token', result.data.data.token) // 前端缓存令牌
+            window.localStorage.setItem('user-token', result.data.token) // 前端缓存令牌
             this.$router.push('/home') // 跳转到主页
           }).catch(() => {
             // elementUI的方法
