@@ -14,7 +14,7 @@
                 <el-table-column label="操作">
                   <template slot-scope="obj">
                     <el-button type="text">修改</el-button>
-                    <el-button type="text">{{obj.row.comment_status ? '关闭评论' : '打开'}}</el-button>
+                    <el-button type="text" @click="openComment(obj)">{{obj.row.comment_status ? '关闭评论' : '打开'}}</el-button>
                   </template>
                 </el-table-column>
                 </el-table>
@@ -41,7 +41,29 @@ export default {
       //  column 当前列的属性
     //   debugger
       return cellValue ? '正常' : '关闭'
+    },
+    // 打开或关闭评论
+    openComment (obj) {
+      // console.log(obj.row.comment_status)
+
+      let status = obj.row.comment_status ? '打开' : '关闭'
+      this.$confirm(`你确定要${status}评论`).then(() => {
+        this.$axios({
+          url: '/comments/status',
+          params: { articles_id: obj.row.id },
+          data: {
+            allow_comment: !obj.row.comment_status
+          }
+        }).then(result => {
+          this.$message({
+            type: 'success',
+            $message: '操作成功'
+          })
+          this.getcomment()
+        })
+      })
     }
+
   },
   created () {
     this.getcomment()
