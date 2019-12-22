@@ -48,18 +48,27 @@ export default {
 
       let status = obj.row.comment_status ? '打开' : '关闭'
       this.$confirm(`你确定要${status}评论`).then(() => {
+        console.log(obj.row.id)
+        debugger
         this.$axios({
+          method: 'put',
           url: '/comments/status',
-          params: { articles_id: obj.row.id },
+          params: { article_id: obj.row.id.toString() },
           data: {
             allow_comment: !obj.row.comment_status
           }
         }).then(result => {
+          // 打开或者关闭评论成功之后
           this.$message({
             type: 'success',
-            $message: '操作成功'
+            message: '操作成功'
           })
           this.getcomment()
+        }).catch(() => {
+          this.$message({
+            type: 'success',
+            message: '操作失败'
+          })
         })
       })
     }
