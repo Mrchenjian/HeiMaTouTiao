@@ -14,12 +14,10 @@ axios.interceptors.request.use(function (config) {
 )
 // 后台数据 到达 响应拦截之前走的一个函数
 axios.defaults.transformResponse = [function (data) {
-  // debugger
   return JSONBig.parse(data) // JSONbig.parse 替换 JSON.parse  保证数字的正确
 }]
 // 黑马头条PC--接口访问-axios拦截器-统一处理响应数据
 axios.interceptors.response.use(function (response) {
-  // debugger
   return response.data ? response.data : {}
 }, function (error) {
   let status = error.response.status // 获取状态码
