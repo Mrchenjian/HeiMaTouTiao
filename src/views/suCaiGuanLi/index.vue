@@ -37,12 +37,12 @@
                     </el-row>
                 </el-card>
           </div>
-        <el-pagination
-                   background
-                   layout="prev, pager, next"
-                   :total="1000">
-                </el-pagination>
-      </el-tab-pane>
+       <el-row type="flex" justify="center" style="height: 80px; align: middle"  >
+          <el-pagination background ayout="prev, pager, next" :total="1000">
+          </el-pagination>
+          </el-row>
+    </el-tab-pane>
+
       </el-tabs>
   </el-card>
 </template>
