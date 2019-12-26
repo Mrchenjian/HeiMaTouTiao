@@ -6,18 +6,24 @@
      <!-- 主体结构 -->
        <el-form   :model="formDate"   ref="myForm"  :rules="rules"    class="formarticle" style="margin-left:50px" label-width="100px">
            <el-form-item label='标题' prop="title">
-               <el-input placeholder="文章名称"  v-model="formDate.title" ></el-input>
+               <el-input placeholder="文章名称"  v-model="formDate.title"  style="width:60%" ></el-input>
            </el-form-item>
-           <el-form-item label="内容" prop="content">
-                <el-input type="textarea"  v-model="formDate.content"   :rows="2" placeholder="请输入内容"></el-input>
+            <el-form-item label="内容" prop="content">
+               <el-input type="textarea" placeholder="请输入内容" :rows="2" style="height:200px;" v-model="formDate.content"  ></el-input>
            </el-form-item>
-           <el-form-item label="封面">
+           <el-form-item label="封面" style="margin-top:100px">
                 <el-radio-group v-model="formDate.cover.type" >
                     <el-radio :label="1">单图</el-radio>
                     <el-radio :label="3">三图</el-radio>
                     <el-radio :label="0">无图</el-radio>
                     <el-radio :label="-1">自动</el-radio>
                 </el-radio-group>
+           </el-form-item>
+           <!-- 封面功能设计 -->
+           <el-form-item>
+               <Upload  :img='formDate.cover.images'>
+
+               </Upload>
            </el-form-item>
            <el-form-item label="频道" prop="channel_id">
                 <el-select v-model="formDate.channel_id"  placeholder="请选择">
@@ -97,7 +103,6 @@ export default {
   },
   watch: {
     $route: function (to, from) {
-      debugger
       if (Object.keys(to.params).length) {
         //  有参数  => 修改
         // this.login()
@@ -112,9 +117,15 @@ export default {
           }
         }
       }
-    },
-    'formData.cover.type': function () {
-      debugger
+    }, // 检测 type 的变化
+    'formDate.cover.type': function () {
+      if (this.formDate.cover.type === 0 || this.formDate.cover.type === -1) {
+        this.formDate.cover.images = []
+      } else if (this.formDate.cover.type === 1) {
+        this.formDate.cover.images = ['']
+      } else if (this.formDate.cover.type === 3) {
+        this.formDate.cover.images = ['', '', '']
+      }
     }
   },
   created () {
@@ -126,5 +137,7 @@ export default {
 </script >
 
 <style  land='less' scopted>
-
+        .formarticle{
+            text-align: left;
+        }
 </style>
