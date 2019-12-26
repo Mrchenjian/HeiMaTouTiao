@@ -13,10 +13,10 @@
            </el-form-item>
            <el-form-item label="封面">
                 <el-radio-group v-model="formDate.cover.type" >
-                    <el-radio label="1">单图</el-radio>
-                    <el-radio label="3">三图</el-radio>
-                    <el-radio label="0">无图</el-radio>
-                    <el-radio label="-1">自动</el-radio>
+                    <el-radio :label="1">单图</el-radio>
+                    <el-radio :label="3">三图</el-radio>
+                    <el-radio :label="0">无图</el-radio>
+                    <el-radio :label="-1">自动</el-radio>
                 </el-radio-group>
            </el-form-item>
            <el-form-item label="频道" prop="channel_id">
@@ -83,8 +83,8 @@ export default {
         if (isok) {
           let { id } = this.$route.params // 获取动态路由参数 id 已是字符串那
           this.$axios({
-            url: '/articles',
-            method: id ? `/articles/${id}` : `/articles`,
+            url: id ? `/articles/${id}` : `/articles`,
+            method: id ? 'put' : 'post',
             params: { draft }, // query参数
             data: this.formDate
           }).then(() => {
@@ -103,7 +103,7 @@ export default {
         // this.login()
       } else {
         // 没有参数  => 发布 // 没有参数  => 发布
-        this.formData = {
+        this.formDate = {
           title: '', // 标题
           content: '', // 文章内容
           cover: {
