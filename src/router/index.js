@@ -18,16 +18,23 @@ const routes = [
     children: [
       { path: '',
         component: bghome },
-      {
+      { // 评论列表
         path: '/home/comment',
         component: () => import('../views/comment/')
 
-      }, {
+      }, { // 素材管理
         path: '/home/material',
         component: () => import('../views/suCaiGuanLi/')
-      }, {
+      }, { // 内容列表
         path: '/home/articles',
         component: () => import('../views/contentsList/')
+      }, {// 修改内容列表
+        path: '/home/publish/:id',
+        component: () => import('../views/publish/')
+      },
+      { // 发布文章
+        path: '/home/publish',
+        component: () => import('../views/publish/')
       }
 
     ]
