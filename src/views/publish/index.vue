@@ -12,7 +12,7 @@
                <quill-editor type="textarea" placeholder="请输入内容" :rows="2" style="height:200px;" v-model="formDate.content"  ></quill-editor>
            </el-form-item>
            <el-form-item label="封面" style="margin-top:100px">
-                <el-radio-group v-model="formDate.cover.type" >
+                <el-radio-group  @change='radioGroup' v-model="formDate.cover.type" >
                     <el-radio :label="1">单图</el-radio>
                     <el-radio :label="3">三图</el-radio>
                     <el-radio :label="0">无图</el-radio>
@@ -67,6 +67,16 @@ export default {
     }
   },
   methods: {
+    // 检测radio-group 数据的变化
+    radioGroup () {
+      if (this.formDate.cover.type === 0 || this.formDate.cover.type === -1) {
+        this.formDate.cover.images = []
+      } else if (this.formDate.cover.type === 1) {
+        this.formDate.cover.images = ['']
+      } else if (this.formDate.cover.type === 3) {
+        this.formDate.cover.images = ['', '', '']
+      }
+    },
     //   获取文章详情通过id
     getArticleById (id) {
       this.$axios({
@@ -117,16 +127,16 @@ export default {
           }
         }
       }
-    }, // 检测 type 的变化
-    'formDate.cover.type': function () {
-      if (this.formDate.cover.type === 0 || this.formDate.cover.type === -1) {
-        this.formDate.cover.images = []
-      } else if (this.formDate.cover.type === 1) {
-        this.formDate.cover.images = ['']
-      } else if (this.formDate.cover.type === 3) {
-        this.formDate.cover.images = ['', '', '']
-      }
-    }
+    }// 检测 type 的变化
+  //   'formDate.cover.type': function () {
+  //     if (this.formDate.cover.type === 0 || this.formDate.cover.type === -1) {
+  //       this.formDate.cover.images = []
+  //     } else if (this.formDate.cover.type === 1) {
+  //       this.formDate.cover.images = ['']
+  //     } else if (this.formDate.cover.type === 3) {
+  //       this.formDate.cover.images = ['', '', '']
+  //     }
+  //   }
   },
   created () {
     this.getChannels() // 获取频道数据
