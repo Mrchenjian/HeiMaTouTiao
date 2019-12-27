@@ -1,14 +1,14 @@
 <template>
-    <el-card>
+    <el-card v-loading='loading'>
          <bread-crumb slot="header">
             <template slot="title">
                 账户信息
             </template>
         </bread-crumb>
         <!-- 放置上传组件 -->
-        <el-upload class='head-upload' action=''
+        <el-upload class='head-upload' action=''  :http-request="uploadImg"
         :show-file-list="false">
-            <img src='../../assets/picture.jpg'>
+            <img :src= 'formData.photo  ? formData.photo  : defaultImg '>
         </el-upload>
         <el-form  :model=" formData"  ref="ruleForm"   :rules="rules" style="margin-left:30px" label-width="100px" class="box">
             <el-form-item label='用户名' prop="name">
@@ -32,10 +32,11 @@
 </template>
 
 <script>
-
+import eventBus from '../../router/untils/eventBus'
 export default {
   data () {
     return {
+      loading: false,
       // 定义一个表单数据对象
       formData: {
         name: '', // 用户名
@@ -57,6 +58,20 @@ export default {
     }
   },
   methods: {
+    //   上传图片
+    uploadImg (params) {
+      this.loading = true // 打开弹层
+      let data = new FormData() // 实例化对象
+      data.append('photo', params.file) // 加入参数
+      this.$axios({
+        url: '/user/photo',
+        method: 'patch',
+        data
+      }).then(result => {
+        this.formData.photo = result.data.photo // 设置头像地址
+        this.loading = false // 关调弹层
+      })
+    },
     //  保存信息
     uplogon () {
       this.$refs.ruleForm.validate((isok) => {
@@ -72,6 +87,7 @@ export default {
               type: 'success',
               message: '保存信息成功'
             })
+            eventBus.$emit('update') // 触发一个自定义事件 .$emit('updateUserInfoSuccess') // 触发一个自定义事件
           })
         }
       })

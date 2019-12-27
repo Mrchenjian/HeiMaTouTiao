@@ -29,6 +29,7 @@
 </template>
 
 <script>
+import eventBus from '../../router/untils/eventBus'
 export default {
   data () {
     return {
@@ -48,8 +49,27 @@ export default {
     }).then(result => {
       this.userInfo = result.data // 获取用户个人信息
     })
+    eventBus.$on('update', () => {
+      this.getUserInfo()
+    })
   },
   methods: {
+    getUserInfo () {
+      let token = window.localStorage.getItem('user-token') // 获取令牌
+      // 查询数据
+      this.$axios({
+        url: '/user/profile',
+        //   headers参数
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      }).then(result => {
+        this.userInfo = result.data // 获取用户个人信息
+      })
+      eventBus.$on('update', () => {
+        this.getUserInfo()
+      })
+    },
     handle (commad) {
       // 区分点击的菜单项
       if (commad === 'lgout') {
