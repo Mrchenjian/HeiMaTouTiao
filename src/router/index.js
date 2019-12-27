@@ -35,6 +35,9 @@ const routes = [
       { // 发布文章
         path: '/home/publish',
         component: () => import('../views/publish/')
+      }, {
+        path: '/home/acount',
+        component: () => import('../views/account')
       }
 
     ]
