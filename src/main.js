@@ -6,6 +6,9 @@ import axios from './interceptor/demand'
 // import axios from 'axios'  被拦截器替换
 import './promission/index'
 import Ftext from 'vue-quill-editor' // vue-quill-editor富文本编辑器
+import 'quill/dist/quill.core.css'
+import 'quill/dist/quill.snow.css'
+import 'quill/dist/quill.bubble.css'
 import components from './components/index'
 // import '' // 全局定义面包屑组件
 import ElementUI from 'element-ui' // 引入UI
