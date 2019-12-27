@@ -21,7 +21,7 @@
            </el-form-item>
            <!-- 封面功能设计 -->
            <el-form-item>
-               <Upload  :img='formDate.cover.images'>
+               <Upload  :img='formDate.cover.images' @clickOneImg='receveImg'>
 
                </Upload>
            </el-form-item>
@@ -67,6 +67,17 @@ export default {
     }
   },
   methods: {
+    receveImg (img, index) {
+      // 接收到数据之后 修改image数组=>但是images是个数组
+      // 有地址 索引
+      // alert('再次接收地址' + img)
+      this.formDate.cover.images = this.formDate.cover.images.map(function (item, i) {
+        if (i === index) {
+          return img
+        }
+        return item
+      })
+    },
     // 检测radio-group 数据的变化
     radioGroup () {
       if (this.formDate.cover.type === 0 || this.formDate.cover.type === -1) {
