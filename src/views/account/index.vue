@@ -59,9 +59,20 @@ export default {
   methods: {
     //  保存信息
     uplogon () {
-      this.$refs.ruleForm.validate(function (isok) {
+      this.$refs.ruleForm.validate((isok) => {
+        //   调用保存方法
         if (isok) {
-          alert(111111111111111)
+          this.$axios({
+            url: '/user/profile',
+            method: 'patch',
+            data: this.formData
+          }).then(result => {
+            //   认为保存成功
+            this.$message({
+              type: 'success',
+              message: '保存信息成功'
+            })
+          })
         }
       })
     },
