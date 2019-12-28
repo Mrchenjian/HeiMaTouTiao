@@ -1,5 +1,8 @@
 import router from '../router'
+import progress from 'nprogress'
+import 'nprogress/nprogress.css'
 router.beforeEach(function (to, from, next) {
+  progress.start() // 开启进度条
   // 拦截谁 判断拦截地址
   console.log(to.path)
 
@@ -15,4 +18,7 @@ router.beforeEach(function (to, from, next) {
   } else {
     next() // 直接放行
   }
+})
+router.afterEach(function (to, from, next) {
+  progress.done() // 关闭进度条
 })

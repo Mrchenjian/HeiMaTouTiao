@@ -3,8 +3,8 @@
   <el-row class='layout-header' type="flex" align="middle" justify="space-between">
       <!-- 左侧 -->
       <el-col class='left' :span="8">
-          <!-- 左侧图标 -->
-          <i class='el-icon-s-unfold'></i>
+          <!-- 左侧图标   -->
+          <i :class="{'el-icon-s-unfold' : showClass ,'el-icon-s-fold' : !showClass}" class="iconpic" @click="collaspseOrOpen"></i>
           <span class='title'>江苏传智播客教育科技股份有限公司</span>
       </el-col>
       <!-- 右侧 -->
@@ -33,6 +33,8 @@ import eventBus from '../../router/untils/eventBus'
 export default {
   data () {
     return {
+      // 改变图标方向
+      showClass: true,
       userInfo: {}, // 用户信息
       defaultImg: require('../../assets/header.jpg') // 先把地址转换成变量
     }
@@ -54,6 +56,11 @@ export default {
     })
   },
   methods: {
+    // 绑定图标点击事件
+    collaspseOrOpen () {
+      this.showClass = !this.showClass
+      eventBus.$emit('changeCollapse') // 改变了折叠状态
+    },
     getUserInfo () {
       let token = window.localStorage.getItem('user-token') // 获取令牌
       // 查询数据
@@ -88,7 +95,10 @@ export default {
   .layout-header {
       height:60px;
       .left {
-          font-size: 18px;
+          font-size: 20px;
+          .iconpic{
+              font-size: 30px;
+          }
           .title {
               margin-left:4px;
               color: #2c3e50;

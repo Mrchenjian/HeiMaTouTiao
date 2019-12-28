@@ -19,14 +19,13 @@ export default {
   props: ['img'],
   data () {
     return {
-      defaultImg: '../../assets/pic_bg.png',
+      defaultImg: require('../../assets/pic_bg.png'),
       visBool: false,
       selectIndex: -1 // 默认下标-1
     }
   },
   methods: {
     receveImg (img) {
-      alert('接收地址' + img)
       this.$emit('clickOneImg', img, this.selectIndex) // 再次触发一个自定义事件
       this.DialogClose()
     },

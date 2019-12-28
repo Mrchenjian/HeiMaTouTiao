@@ -8,7 +8,7 @@
         <!-- 放置上传组件 -->
         <el-upload class='head-upload' action=''  :http-request="uploadImg"
         :show-file-list="false">
-            <img :src= 'formData.photo  ? formData.photo  : defaultImg '>
+            <img :src='formData.photo ? formData.photo : defaultImg'>
         </el-upload>
         <el-form  :model=" formData"  ref="ruleForm"   :rules="rules" style="margin-left:30px" label-width="100px" class="box">
             <el-form-item label='用户名' prop="name">
@@ -54,7 +54,7 @@ export default {
         email: [{ required: true, message: '邮箱不能为空' },
           { pattern: /^([0-9A-Za-z\-_.]+)@([0-9a-z]+\.[a-z]{2,3}(\.[a-z]{2})?)$/g, message: '邮箱输入格式错误' }]
       },
-      defaultImg: require('../../assets/picture.jpg')
+      defaultImg: require('../../assets/pic_bg.png')
     }
   },
   methods: {
