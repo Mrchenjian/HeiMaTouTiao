@@ -38,6 +38,9 @@ const routes = [
       }, {
         path: '/home/acount',
         component: () => import('../views/account')
+      }, { // 404 找不到页面的地址
+        path: '*', // 匹配任何地址 但是如果其他的可以匹配 优先匹配其他 否则匹配该组件
+        component: () => import('../views/404 找不到页面/404.vue')
       }
 
     ]
